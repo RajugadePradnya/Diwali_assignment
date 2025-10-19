@@ -1,0 +1,98 @@
+package com.demo.main;
+
+import java.io.*;
+import java.util.*;
+
+// Custom Exception for Attendance
+class LowAttendanceException extends Exception {
+    public LowAttendanceException(String message) {
+        super(message);
+    }
+}
+
+// Serializable Student class
+class Student implements Serializable {
+    private int rollno;
+    private String sname;
+    private String course;
+    private double attendance_percentage;
+    private double score;
+
+    // Default Constructor
+    public Student() {}
+
+    // Parameterized Constructor
+    public Student(int rollno, String sname, String course, double attendance_percentage, double score)
+            throws LowAttendanceException {
+        this.rollno = rollno;
+        this.sname = sname;
+        this.course = course;
+        this.attendance_percentage = attendance_percentage;
+        this.score = score;
+
+        if (attendance_percentage < 60) {
+            throw new LowAttendanceException("Attendance below 60% for student: " + sname);
+        }
+    }
+
+    // Method to calculate grade
+    public String calculateGrade() {
+        if (score >= 90) return "A+";
+        else if (score >= 80) return "A";
+        else if (score >= 70) return "B";
+        else if (score >= 60) return "C";
+        else return "F";
+    }
+
+    public double getAttendance() {
+        return attendance_percentage;
+    }
+
+    @Override
+    public String toString() {
+        return "Roll No: " + rollno + ", Name: " + sname + ", Course: " + course +
+                ", Attendance: " + attendance_percentage + "%, Score: " + score +
+                ", Grade: " + calculateGrade();
+    }
+}
+
+public class Student{
+    public static void main(String[] args) {
+        List<Student> studentList = new ArrayList<>();
+
+        // Create and add 10 students
+        try {
+            studentList.add(new Student(1, "Anjali", "ENTC", 92, 88));
+            studentList.add(new Student(2, "Ravi", "IT", 85, 78));
+            studentList.add(new Student(3, "Sneha", "CSE", 75, 90));
+            studentList.add(new Student(4, "Amit", "EEE", 55, 60)); // Will throw exception
+            studentList.add(new Student(5, "Neha", "ENTC", 88, 70));
+            studentList.add(new Student(6, "Rohan", "CSE", 95, 95));
+            studentList.add(new Student(7, "Pooja", "IT", 67, 80));
+            studentList.add(new Student(8, "Karan", "CIVIL", 77, 65));
+            studentList.add(new Student(9, "Priya", "EEE", 82, 72));
+            studentList.add(new Student(10, "Vikas", "ENTC", 90, 85));
+        } catch (LowAttendanceException e) {
+            System.out.println(e.getMessage());
+        }
+
+        // Serialize student objects into a file
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("students.dat"))) {
+            oos.writeObject(studentList);
+            System.out.println("\n✅ Students serialized successfully to 'students.dat'\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Sort students in decreasing order of attendance
+        TreeSet<Student> sortedStudents = new TreeSet<>(
+                (s1, s2) -> Double.compare(s2.getAttendance(), s1.getAttendance())
+        );
+        sortedStudents.addAll(studentList);
+
+        System.out.println("📋 Students sorted by decreasing attendance:\n");
+        for (Student s : sortedStudents) {
+            System.out.println(s);
+        }
+    }
+}
