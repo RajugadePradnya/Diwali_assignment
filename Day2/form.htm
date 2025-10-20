@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 350px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    label {
+      font-weight: bold;
+    }
+    span.error {
+      color: red;
+      font-size: 12px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <form id="registrationForm" onsubmit="return validateForm()">
+    <h2>Registration Form</h2>
+
+    <label>First Name:</label>
+    <input type="text" id="fname" />
+    <span id="fnameError" class="error"></span><br />
+
+    <label>Last Name:</label>
+    <input type="text" id="lname" />
+    <span id="lnameError" class="error"></span><br />
+
+    <label>Email:</label>
+    <input type="text" id="email" />
+    <span id="emailError" class="error"></span><br />
+
+    <label>User ID:</label>
+    <input type="text" id="userid" />
+    <span id="useridError" class="error"></span><br />
+
+    <label>Password:</label>
+    <input type="password" id="password" />
+    <span id="passwordError" class="error"></span><br />
+
+    <label>Confirm Password:</label>
+    <input type="password" id="confirmPassword" />
+    <span id="confirmError" class="error"></span><br />
+
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    function validateForm() {
+      let valid = true;
+
+      // Clear previous errors
+      document.querySelectorAll(".error").forEach(e => e.textContent = "");
+
+      const fname = document.getElementById("fname").value.trim();
+      const lname = document.getElementById("lname").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const userid = document.getElementById("userid").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const confirm = document.getElementById("confirmPassword").value.trim();
+
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+
+      if (fname === "") {
+        document.getElementById("fnameError").textContent = "First name is required";
+        valid = false;
+      }
+      if (lname === "") {
+        document.getElementById("lnameError").textContent = "Last name is required";
+        valid = false;
+      }
+      if (email === "") {
+        document.getElementById("emailError").textContent = "Email is required";
+        valid = false;
+      } else if (!emailPattern.test(email)) {
+        document.getElementById("emailError").textContent = "Invalid email format";
+        valid = false;
+      }
+      if (userid === "") {
+        document.getElementById("useridError").textContent = "User ID is required";
+        valid = false;
+      }
+      if (password === "") {
+        document.getElementById("passwordError").textContent = "Password is required";
+        valid = false;
+      }
+      if (confirm === "") {
+        document.getElementById("confirmError").textContent = "Confirm your password";
+        valid = false;
+      } else if (password !== confirm) {
+        document.getElementById("confirmError").textContent = "Passwords do not match";
+        valid = false;
+      }
+
+      return valid;
+    }
+  </script>
+</body>
+</html>
