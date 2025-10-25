@@ -1,0 +1,17 @@
+@model IEnumerable<StudentManagementSystem.Models.Course>
+@{ ViewData["Title"]="Courses"; }
+<h2>Courses</h2>
+<p><a class="btn btn-primary" href="/Courses/Create">Add Course</a></p>
+<table class="table table-striped">
+<thead><tr><th>#</th><th>Course Name</th><th></th></tr></thead>
+<tbody>
+@foreach(var c in Model){
+<tr><td>@c.CourseID</td><td>@c.CourseName</td>
+<td>
+  <a class="btn btn-sm btn-info" href="/Courses/Details/@c.CourseID">Details</a>
+  <a class="btn btn-sm btn-warning" href="/Courses/Edit/@c.CourseID">Edit</a>
+  <a class="btn btn-sm btn-danger" href="/Courses/Delete/@c.CourseID">Delete</a>
+</td></tr>
+}
+</tbody>
+</table>

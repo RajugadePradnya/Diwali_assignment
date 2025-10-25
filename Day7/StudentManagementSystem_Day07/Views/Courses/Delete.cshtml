@@ -1,0 +1,9 @@
+@model StudentManagementSystem.Models.Course
+@{ ViewData["Title"]="Delete Course"; }
+<h2>Delete Course</h2>
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="CourseID" />
+    <p>Are you sure you want to delete <strong>@Model.CourseName</strong>?</p>
+    <button class="btn btn-danger" type="submit">Delete</button>
+    <a class="btn btn-secondary" href="/Courses">Cancel</a>
+</form>

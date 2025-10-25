@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head><title>Customer Form</title></head>
+<body>
+  <h2>Customer</h2>
+  <form th:action="@{/customers/save}" th:object="${customer}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <label>Name: <input th:field="*{name}" required /></label><br/>
+    <label>Email: <input th:field="*{email}" required /></label><br/>
+    <label>Phone: <input th:field="*{phone}" required /></label><br/>
+    <button type="submit">Save</button>
+  </form>
+  <a href="/customers">Back</a>
+</body>
+</html>

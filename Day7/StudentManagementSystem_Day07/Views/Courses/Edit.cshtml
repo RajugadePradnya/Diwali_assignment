@@ -1,0 +1,13 @@
+@model StudentManagementSystem.Models.Course
+@{ ViewData["Title"]="Edit Course"; }
+<h2>Edit Course</h2>
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="CourseID" />
+    <div class="mb-3">
+        <label class="form-label">Course Name</label>
+        <input asp-for="CourseName" class="form-control" />
+        <span asp-validation-for="CourseName" class="text-danger"></span>
+    </div>
+    <button class="btn btn-primary" type="submit">Save</button>
+</form>
+@await Html.PartialAsync("_ValidationScriptsPartial")
